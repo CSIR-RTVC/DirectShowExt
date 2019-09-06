@@ -3,11 +3,13 @@
 find_package(baseclasses 1.0 REQUIRED)
 
 SET (DSE_INCLUDE_DIRS 
-	${libDirectShowExt_SOURCE_DIR}/include/
-	${libDirectShowExt_SOURCE_DIR}/include/DirectShowExt
-	${libDirectShowExt_SOURCE_DIR}/externals/DShowBaseClasses/baseclasses
 )
 
+SET (DSE_INCLUDE_DEPENDENCIES
+	${libDirectShowExt_SOURCE_DIR}/include/
+	${libDirectShowExt_SOURCE_DIR}/include/DirectShowExt
+	${PROJECT_SOURCE_DIR}/externals/DShowBaseClasses/baseclasses
+)
 
 # Lib directories
 LINK_DIRECTORIES(
@@ -60,13 +62,18 @@ ADD_LIBRARY(DirectShowExt STATIC ${PROJ_SRCS} ${PROJ_HDRS})
 #export(EXPORT DirectShowExt FILE DirectShowExtTargets.cmake NAMESPACE DirectShowExt::)
 #install(EXPORT DirectShowExt FILE DirectShowExtTargets.cmake COMPONENT DirectShowExt NAMESPACE DirectShowExt:: DESTINATION cmake CONFIGURATIONS ${CMAKE_CONFIGURATION_TYPES})
 install(TARGETS DirectShowExt
-    EXPORT DirectShowExt-export
+    EXPORT DirectShowExtConfig
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-install(EXPORT DirectShowExtTargets
+export(TARGETS
+        DirectShowExt
+    NAMESPACE DirectShowExt::
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/DirectShowExtConfig.cmake"
+)
+install(EXPORT DirectShowExtConfig
   FILE
-    DirectShowExtTargets.cmake
+    DirectShowExtConfig.cmake
   NAMESPACE
     DirectShowExt::
   DESTINATION
@@ -79,6 +86,7 @@ target_include_directories(DirectShowExt
         $<BUILD_INTERFACE:${DSE_INCLUDE_DIRS}>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
+		${DSE_INCLUDE_DEPENDENCIES}
 )
 #target_compile_options(DirectShowExt PRIVATE -Werror)
 target_compile_features(DirectShowExt PRIVATE cxx_std_11)

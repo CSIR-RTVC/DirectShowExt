@@ -84,7 +84,7 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # add path to DShowBaseClasses
-LIST(APPEND CMAKE_PREFIX_PATH ${libDirectShowExt_SOURCE_DIR}/externals/DShowBaseClasses)
+LIST(APPEND CMAKE_PREFIX_PATH ${libDirectShowExt_SOURCE_DIR}/externals/DShowBaseClasses/build)
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(app)
