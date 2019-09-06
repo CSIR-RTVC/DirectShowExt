@@ -1,0 +1,2 @@
+"C:\Program Files\CMake\bin\CMake" .. -G "Visual Studio 15"
+"C:\Program Files\CMake\bin\CMake" --build . --config Release
