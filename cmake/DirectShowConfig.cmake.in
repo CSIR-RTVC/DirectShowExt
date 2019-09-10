@@ -1,0 +1,16 @@
+get_filename_component(DirectShowExt_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(CMakeFindDependencyMacro)
+
+list(APPEND CMAKE_MODULE_PATH ${DirectShowExt_CMAKE_DIR})
+
+# NOTE Had to use find_package because find_dependency does not support COMPONENTS or MODULE until 3.8.0
+
+#find_dependency(Boost 1.55 REQUIRED COMPONENTS regex)
+find_package(DirectShowExt 1.0 REQUIRED MODULE)
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
+
+if(NOT TARGET DirectShowExt::DirectShowExt)
+	include("${DirectShowExt_CMAKE_DIR}/DirectShowExtTargets.cmake")
+endif()
+
+set(DirectShowExt_LIBRARIES DirectShowExt::DirectShowExt)
