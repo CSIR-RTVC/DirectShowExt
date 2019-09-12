@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 project(libDirectShowExt VERSION 1.0.0 LANGUAGES CXX)
 
-#Make sure that custom modules like FindRapidJSON are found
+#Make sure that custom modules are found
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 
 include(FetchContent)
@@ -79,6 +79,8 @@ target_compile_options(DirectShowExt PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>)
 target_link_libraries(DirectShowExt
     PUBLIC
         BaseClasses::BaseClasses
+		strmiids
+		comctl32
     PRIVATE
 )
 
